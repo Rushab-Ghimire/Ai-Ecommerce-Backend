@@ -11,7 +11,8 @@ from rest_framework.reverse import reverse
 def api_root(request):
     return Response(
         {
-            'users': reverse('sign-up', request=request),
+            'register': reverse('sign-up', request=request),
+            'my-profile':reverse('user-profile', request=request),
         }
     )
 
@@ -27,3 +28,6 @@ class ProfileView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+    
+    
+    
