@@ -6,3 +6,6 @@ redis
 stripe
 django-environ
 django-cors-headers
+djangorestframework-simplejwt
+pillow
+httpie
