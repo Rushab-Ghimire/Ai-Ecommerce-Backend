@@ -20,17 +20,15 @@ services:
 
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
+      # Map the whole project folder to /app so scripts and code are both visible
       - .:/app
     ports:
       - "8000:8000"
-    # This line tells Docker to read your .env file
     env_file:
       - .env
     depends_on:
       - db
       - redis
-
 volumes:
   postgres_data:

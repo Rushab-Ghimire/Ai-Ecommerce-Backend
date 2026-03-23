@@ -1,18 +1,22 @@
-# 1. Get a lightweight, standard Python computer
 FROM python:3.11-slim
 
-# 2. Tell Python not to write annoying hidden cache files
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# 3. Create a folder inside the Docker computer called /app
+RUN apt-get update && apt-get install -y netcat-traditional && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
-# 4. Copy our requirements list into the Docker computer
 COPY requirements.txt .
-
-# 5. Tell Docker to install our Python packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-# 6. Copy the rest of our code into the Docker computer
+# 1. Copy everything into /app
 COPY . .
+
+# 2. Fix the path: it's inside 'scripts' relative to our current /app folder
+RUN chmod +x ./scripts/run.sh
+
+# 3. Update the PATH so it finds our script
+ENV PATH="/app/scripts:$PATH"
+
+CMD ["run.sh"]
